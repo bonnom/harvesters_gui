@@ -21,11 +21,11 @@
 # Standard library imports
 
 # Related third party imports
-from PyQt5.QtWidgets import QAction
+from PyQt6.QtGui import QAction
 
 # Local application/library specific imports
 from harvesters._private.core.subject import Subject
-from harvesters_gui._private.frontend.pyqt5.icon import Icon
+from harvesters_gui._private.frontend.pyqt.icon import Icon
 
 
 class Action(QAction, Subject):

@@ -23,18 +23,19 @@ import re
 import sys
 
 # Related third party imports
-from PyQt5.Qt import Qt, QStyledItemDelegate, QColor
-from PyQt5.QtCore import QAbstractItemModel, QModelIndex, \
-    QSortFilterProxyModel
-from PyQt5.QtWidgets import QApplication, QTreeView, \
-    QSpinBox, QPushButton, QComboBox, QWidget, \
-    QLineEdit
+from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QColor
+from PyQt6.QtCore import (QAbstractItemModel, QModelIndex,
+    QSortFilterProxyModel)
+from PyQt6.QtWidgets import (QApplication, QTreeView,
+    QSpinBox, QPushButton, QComboBox, QWidget,
+    QLineEdit, QStyledItemDelegate)
 
 from genicam.genapi import NodeMap
 from genicam.genapi import EInterfaceType, EAccessMode, EVisibility
 
 # Local application/library specific imports
-from harvesters_gui._private.frontend.pyqt5.helper import get_system_font
+from harvesters_gui._private.frontend.pyqt.helper import get_system_font
 
 
 class TreeItem(object):
@@ -162,8 +163,10 @@ class TreeItem(object):
 class FeatureTreeModel(QAbstractItemModel):
     #
     _capable_roles = [
-        Qt.DisplayRole, Qt.ToolTipRole, Qt.BackgroundColorRole,
-        Qt.ForegroundRole
+        Qt.ItemDataRole.DisplayRole, 
+        Qt.ItemDataRole.ToolTipRole,
+        Qt.ItemDataRole.BackgroundRole,
+        Qt.ItemDataRole.ForegroundRole
     ]
 
     #
@@ -206,11 +209,11 @@ class FeatureTreeModel(QAbstractItemModel):
             return None
 
         item = index.internalPointer()
-        if role == Qt.DisplayRole:
+        if role == Qt.ItemDataRole.DisplayRole:
             value = item.data(index.column())
-        elif role == Qt.ToolTipRole:
+        elif role == Qt.ItemDataRole.ToolTipRole:
             value = item.tooltip(index.column())
-        elif role == Qt.BackgroundColorRole:
+        elif role == Qt.ItemDataRole.BackgroundRole:
             value = item.background(index.column())
         else:
             value = item.foreground(index.column())
@@ -236,7 +239,7 @@ class FeatureTreeModel(QAbstractItemModel):
 
     def headerData(self, p_int, Qt_Orientation, role=None):
         # p_int: section
-        if Qt_Orientation == Qt.Horizontal and role == Qt.DisplayRole:
+        if Qt_Orientation == Qt.Horizontal and role == Qt.ItemDataRole.DisplayRole:
             return self.root_item.data(p_int)
         return None
 
@@ -288,8 +291,8 @@ class FeatureTreeModel(QAbstractItemModel):
             if interface_type == EInterfaceType.intfICategory:
                 self.populateTreeItems(feature.features, item)
 
-    def setData(self, index: QModelIndex, value, role=Qt.EditRole):
-        if role == Qt.EditRole:
+    def setData(self, index: QModelIndex, value, role=Qt.ItemDataRole.EditRole):
+        if role == Qt.ItemDataRole.EditRole:
             # TODO: Check the type of the target and convert the given value.
             self.dataChanged.emit(index, index)
 
@@ -372,7 +375,7 @@ class FeatureEditDelegate(QStyledItemDelegate):
     def setEditorData(self, editor: QWidget, proxy_index: QModelIndex):
 
         src_index = self._proxy.mapToSource(proxy_index)
-        value = src_index.data(Qt.DisplayRole)
+        value = src_index.data(Qt.ItemDataRole.DisplayRole)
         tree_item = src_index.internalPointer()
         feature = tree_item.own_data[0]
         interface_type = feature.node.principal_interface_type

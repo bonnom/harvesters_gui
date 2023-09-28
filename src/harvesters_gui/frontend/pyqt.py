@@ -25,10 +25,11 @@ import sys
 import time
 
 # Related third party imports
-from PyQt5.QtCore import QMutexLocker, QMutex, pyqtSignal, QThread
-from PyQt5.QtGui import QKeySequence
-from PyQt5.QtWidgets import QMainWindow, QAction, QComboBox, \
-    QDesktopWidget, QFileDialog, QDialog, QShortcut, QApplication
+from PyQt6.QtCore import QMutexLocker, QMutex, pyqtSignal, QThread
+from PyQt6.QtGui import (QKeySequence, QAction, QShortcut, 
+                         QScreen, QGuiApplication)
+from PyQt6.QtWidgets import (QMainWindow, QComboBox,
+    QFileDialog, QDialog, QApplication)
 
 from genicam.gentl import NotInitializedException, InvalidHandleException, \
     InvalidIdException, ResourceInUseException, \
@@ -39,14 +40,14 @@ from genicam.gentl import NotInitializedException, InvalidHandleException, \
 from harvesters.core import Harvester as HarvesterCore, ParameterSet, ParameterKey
 from harvesters_gui._private.frontend.canvas import Canvas2D
 from harvesters_gui._private.frontend.helper import compose_tooltip
-from harvesters_gui._private.frontend.pyqt5.about import About
-from harvesters_gui._private.frontend.pyqt5.action import Action
-from harvesters_gui._private.frontend.pyqt5.attribute_controller import AttributeController
-from harvesters_gui._private.frontend.pyqt5.device_list import ComboBoxDeviceList
-from harvesters_gui._private.frontend.pyqt5.display_rate_list import ComboBoxDisplayRateList
-from harvesters_gui._private.frontend.pyqt5.helper import get_system_font
-from harvesters_gui._private.frontend.pyqt5.icon import Icon
-from harvesters_gui._private.frontend.pyqt5.thread import _PyQtThread
+from harvesters_gui._private.frontend.pyqt.about import About
+from harvesters_gui._private.frontend.pyqt.action import Action
+from harvesters_gui._private.frontend.pyqt.attribute_controller import AttributeController
+from harvesters_gui._private.frontend.pyqt.device_list import ComboBoxDeviceList
+from harvesters_gui._private.frontend.pyqt.display_rate_list import ComboBoxDisplayRateList
+from harvesters_gui._private.frontend.pyqt.helper import get_system_font
+from harvesters_gui._private.frontend.pyqt.icon import Icon
+from harvesters_gui._private.frontend.pyqt.thread import _PyQtThread
 from harvesters.util.logging import get_logger
 
 
@@ -177,7 +178,7 @@ class Harvester(QMainWindow):
 
         # Place it in the center.
         rectangle = self.frameGeometry()
-        coordinate = QDesktopWidget().availableGeometry().center()
+        coordinate = QGuiApplication.primaryScreen().availableGeometry().center()
         rectangle.moveCenter(coordinate)
         self.move(rectangle.topLeft())
 
@@ -315,7 +316,7 @@ class Harvester(QMainWindow):
         #
         self._widget_device_list = ComboBoxDeviceList(self)
         self._widget_device_list.setSizeAdjustPolicy(
-            QComboBox.AdjustToContents
+            QComboBox.SizeAdjustPolicy.AdjustToContents
         )
         shortcut_key = 'Ctrl+Shift+d'
         shortcut = QShortcut(QKeySequence(shortcut_key), self)
@@ -336,7 +337,7 @@ class Harvester(QMainWindow):
         #
         self._widget_display_rates = ComboBoxDisplayRateList(self)
         self._widget_display_rates.setSizeAdjustPolicy(
-            QComboBox.AdjustToContents
+            QComboBox.SizeAdjustPolicy.AdjustToContents
         )
         shortcut_key = 'Ctrl+Shift+r'
         shortcut = QShortcut(QKeySequence(shortcut_key), self)
@@ -529,9 +530,9 @@ class Harvester(QMainWindow):
         dialog = QFileDialog(self)
         dialog.setWindowTitle('Select a CTI file to load')
         dialog.setNameFilter('CTI files (*.cti)')
-        dialog.setFileMode(QFileDialog.ExistingFile)
+        dialog.setFileMode(QFileDialog.FileMode.ExistingFile)
 
-        if dialog.exec_() == QDialog.Accepted:
+        if dialog.exec() == QDialog.DialogCode.Accepted:
             #
             file_path = dialog.selectedFiles()[0]
 
@@ -767,4 +768,4 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     harvester = Harvester(vsync=True)
     harvester.show()
-    sys.exit(app.exec_())
+    sys.exit(app.exec())

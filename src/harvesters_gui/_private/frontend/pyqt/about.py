@@ -22,16 +22,16 @@
 import sys
 
 # Related third party imports
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QPainter, QPixmap
-from PyQt5.QtWidgets import QDialog, QApplication, QPlainTextEdit, \
-    QVBoxLayout, QHBoxLayout, QLineEdit, QFrame, QPushButton, \
-    QTextEdit
+from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QPainter, QPixmap
+from PyQt6.QtWidgets import (QDialog, QApplication, QPlainTextEdit,
+    QVBoxLayout, QHBoxLayout, QLineEdit, QFrame, QPushButton,
+    QTextEdit)
 
 # Local application/library specific imports
 from harvesters.__init__ import __version__
 from harvesters_gui._helper import get_package_root
-from harvesters_gui._private.frontend.pyqt5.helper import get_system_font
+from harvesters_gui._private.frontend.pyqt.helper import get_system_font
 
 
 class DecoratedDialog(QDialog):
@@ -69,7 +69,7 @@ class TransparentTextEdit(QTextEdit):
         self.setReadOnly(True)
         self.setFont(get_system_font())
         self.setStyleSheet('background: rgb(0, 0, 0, 0%)')
-        self.setLineWrapMode(True)
+        #self.setLineWrapMode(True)
         self.setFrameStyle(QFrame.NoFrame)
         self.setAlignment(Qt.AlignCenter)
 
@@ -169,7 +169,7 @@ class Acknowledgements(QDialog):
         self._text = QPlainTextEdit(content)
         self._text.setReadOnly(True)
         self._text.setFont(get_system_font())
-        self._text.setLineWrapMode(True)
+        #self._text.setLineWrapMode(True)
         self._text.setFixedWidth(480)
 
         layout.addWidget(self._text)

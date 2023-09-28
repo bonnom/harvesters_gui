@@ -34,14 +34,12 @@ log.set_verbosity(log.DEBUG)
 log.info('Entered setup.py')
 log.info('$PATH=%s' % os.environ['PATH'])
 
-
 # Check the Python version:
-supported_versions = [(3, 5), (3, 6), (3, 7), (3, 8)]
+supported_versions = [(3, 5), (3, 6), (3, 7), (3, 8), (3, 9), (3, 10),(3, 11)]
 if sys.version_info in supported_versions:
     raise RuntimeError(
         'See https://github.com/genicam/harvesters_gui#requirements'
     )
-
 
 with open('README.rst', 'r',encoding='utf-8_sig') as fh:
     __doc__ = fh.read()
@@ -74,6 +72,9 @@ setuptools.setup(
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
     ),
     # A short, on-sentence summary of the package:
     description=description,
@@ -81,8 +82,8 @@ setuptools.setup(
     download_url='https://pypi.org/project/harvesters_gui/',
     # A list of required Python modules:
     install_requires=[
-        'PyQt5<=5.13',
-        'vispy<=0.6',
+        'PyQt6>=6.5.2',
+        'vispy>=0.14.0',
         'harvesters>=1.1',
     ],
 

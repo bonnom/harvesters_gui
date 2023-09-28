@@ -21,7 +21,7 @@
 # Standard library imports
 
 # Related third party imports
-from PyQt5.QtCore import QMutexLocker, QThread
+from PyQt6.QtCore import QMutexLocker, QThread
 
 # Local application/library specific imports
 from harvesters.core import ThreadBase

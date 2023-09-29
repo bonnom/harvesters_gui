@@ -1,3 +1,0 @@
-PyQt6>=6.5.2
-vispy>=0.14.0
-harvesters>=1.1

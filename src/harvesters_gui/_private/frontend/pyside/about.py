@@ -22,16 +22,16 @@
 import sys
 
 # Related third party imports
-from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QPainter, QPixmap
-from PyQt6.QtWidgets import (QDialog, QApplication, QPlainTextEdit,
+from PySide6.QtCore import Qt
+from PySide6.QtGui import QPainter, QPixmap
+from PySide6.QtWidgets import (QDialog, QApplication, QPlainTextEdit,
     QVBoxLayout, QHBoxLayout, QLineEdit, QFrame, QPushButton,
     QTextEdit)
 
 # Local application/library specific imports
 from harvesters.__init__ import __version__
 from harvesters_gui._helper import get_package_root
-from harvesters_gui._private.frontend.pyqt.helper import get_system_font
+from harvesters_gui._private.frontend.pyside.helper import get_system_font
 
 
 class DecoratedDialog(QDialog):
@@ -146,16 +146,16 @@ class Acknowledgements(QDialog):
         content = 'Cover Drawing:\n'
         content += '\n'
         content += 'Pieter Bruegel the Elder, The Harvesters\n'
-        content += 'Copyright (c) 2000–2018 The Metropolitan Museum of Arts'
+        content += 'Copyright (c) 2000–2023 The Metropolitan Museum of Arts'
         content += '\n\n'
         content += 'Open Source Libraries/Resources:\n'
         content += '\n'
         content += 'VisPy (BSD)\n'
-        content += 'Copyright (c) 2013-2018 VisPy developers\n'
+        content += 'Copyright (c) 2013-2023 VisPy developers\n'
         content += 'http://vispy.org/'
         content += '\n\n'
-        content += 'PyQt5 (GPL)\n'
-        content += 'Copyright (c) 2018 Riverbank Computing Limited\n'
+        content += 'PySide 6 (LGPL)\n'
+        content += 'Copyright (c) 2023 Riverbank Computing Limited\n'
         content += 'https://www.riverbankcomputing.com/'
         content += '\n\n'
         content += 'Icons8 (Creative Commons Attribution-NoDerivs 3.0 Unported)\n'

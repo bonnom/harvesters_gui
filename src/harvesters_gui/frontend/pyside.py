@@ -25,11 +25,12 @@ import sys
 import time
 
 # Related third party imports
-from PyQt6.QtCore import QMutexLocker, QMutex, pyqtSignal, QThread
-from PyQt6.QtGui import (QKeySequence, QAction, QShortcut, 
+from PySide6.QtCore import QMutexLocker, QMutex, Signal, QThread
+from PySide6.QtGui import (QKeySequence, QAction, QShortcut, 
                          QScreen, QGuiApplication)
-from PyQt6.QtWidgets import (QMainWindow, QComboBox,
+from PySide6.QtWidgets import (QMainWindow, QComboBox,
     QFileDialog, QDialog, QApplication)
+
 
 from genicam.gentl import NotInitializedException, InvalidHandleException, \
     InvalidIdException, ResourceInUseException, \
@@ -40,21 +41,21 @@ from genicam.gentl import NotInitializedException, InvalidHandleException, \
 from harvesters.core import Harvester as HarvesterCore, ParameterSet, ParameterKey
 from harvesters_gui._private.frontend.canvas import Canvas2D
 from harvesters_gui._private.frontend.helper import compose_tooltip
-from harvesters_gui._private.frontend.pyqt.about import About
-from harvesters_gui._private.frontend.pyqt.action import Action
-from harvesters_gui._private.frontend.pyqt.attribute_controller import AttributeController
-from harvesters_gui._private.frontend.pyqt.device_list import ComboBoxDeviceList
-from harvesters_gui._private.frontend.pyqt.display_rate_list import ComboBoxDisplayRateList
-from harvesters_gui._private.frontend.pyqt.helper import get_system_font
-from harvesters_gui._private.frontend.pyqt.icon import Icon
-from harvesters_gui._private.frontend.pyqt.thread import _PyQtThread
+from harvesters_gui._private.frontend.pyside.about import About
+from harvesters_gui._private.frontend.pyside.action import Action
+from harvesters_gui._private.frontend.pyside.attribute_controller import AttributeController
+from harvesters_gui._private.frontend.pyside.device_list import ComboBoxDeviceList
+from harvesters_gui._private.frontend.pyside.display_rate_list import ComboBoxDisplayRateList
+from harvesters_gui._private.frontend.pyside.helper import get_system_font
+from harvesters_gui._private.frontend.pyside.icon import Icon
+from harvesters_gui._private.frontend.pyside.thread import _PySideThread
 from harvesters.util.logging import get_logger
 
 
 class Harvester(QMainWindow):
     #
-    _signal_update_statistics = pyqtSignal(str)
-    _signal_stop_image_acquisition = pyqtSignal()
+    _signal_update_statistics = Signal(str)
+    _signal_stop_image_acquisition = Signal()
 
     def __init__(self, *, vsync=True, logger=None):
         #
@@ -93,7 +94,7 @@ class Harvester(QMainWindow):
         #
         self._signal_update_statistics.connect(self.update_statistics)
         self._signal_stop_image_acquisition.connect(self._stop_image_acquisition)
-        self._thread_statistics_measurement = _PyQtThread(
+        self._thread_statistics_measurement = _PySideThread(
             parent=self, mutex=self._mutex,
             worker=self._worker_update_statistics,
             update_cycle_us=250000
@@ -149,7 +150,7 @@ class Harvester(QMainWindow):
 
     @property
     def cti_files(self):
-        return self.harvester_core.cti_files
+        return self.harvester_core.files
 
     @property
     def harvester_core(self):
@@ -471,7 +472,7 @@ class Harvester(QMainWindow):
     def action_on_connect(self):
         #
         config = ParameterSet({
-            ParameterKey.THREAD_FACTORY_METHOD: lambda: _PyQtThread(
+            ParameterKey.THREAD_FACTORY_METHOD: lambda: _PySideThread(
                 parent=self, mutex=self._mutex),
         })
         try:
@@ -540,7 +541,7 @@ class Harvester(QMainWindow):
             self.harvester_core.reset()
 
             # Update the path to the target GenTL Producer.
-            self.harvester_core.add_cti_file(file_path)
+            self.harvester_core.add_file(file_path)
 
             # Update the device list.
             self.harvester_core.update()

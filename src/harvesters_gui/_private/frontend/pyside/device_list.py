@@ -21,11 +21,11 @@
 # Standard library imports
 
 # Related third party imports
-from PyQt6.QtWidgets import QComboBox
+from PySide6.QtWidgets import QComboBox
 
 # Local application/library specific imports
 from harvesters._private.core.observer import Observer
-from harvesters_gui._private.frontend.pyqt.helper import get_system_font
+from harvesters_gui._private.frontend.pyside.helper import get_system_font
 
 
 class ComboBoxDeviceList(QComboBox, Observer):

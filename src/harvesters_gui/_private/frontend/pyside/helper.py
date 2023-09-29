@@ -21,7 +21,7 @@
 # Standard library imports
 
 # Related third party imports
-from PyQt6.QtGui import QFont
+from PySide6.QtGui import QFont
 
 # Local application/library specific imports
 from harvesters._private.core.helper.system import is_running_on_macos, \

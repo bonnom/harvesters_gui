@@ -21,13 +21,13 @@
 # Standard library imports
 
 # Related third party imports
-from PyQt6.QtCore import QMutexLocker, QThread
+from PySide6.QtCore import QMutexLocker, QThread
 
 # Local application/library specific imports
 from harvesters.core import ThreadBase
 
 
-class _PyQtThread(ThreadBase):
+class _PySideThread(ThreadBase):
     def __init__(self, parent=None, mutex=None, worker=None, update_cycle_us=1):
         #
         super().__init__(mutex=mutex)

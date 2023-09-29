@@ -95,8 +95,8 @@ To launch Harvester GUI, let's create a Python script file, naming ``harvester.p
 .. code-block:: python
 
     import sys
-    from PyQt6.QtWidgets import QApplication
-    from harvesters_gui.frontend.pyqt import Harvester
+    from PySide6.QtWidgets import QApplication
+    from harvesters_gui.frontend.pyside import Harvester
 
     if __name__ == '__main__':
         app = QApplication(sys.argv)

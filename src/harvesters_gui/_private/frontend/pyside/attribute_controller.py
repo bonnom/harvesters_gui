@@ -22,18 +22,18 @@
 import sys
 
 # Related third party imports
-from PyQt6.QtCore import pyqtSlot
-from PyQt6.QtGui import QKeySequence, QAction, QShortcut
-from PyQt6.QtWidgets import (QMainWindow, QApplication, QTreeView, QComboBox, QLineEdit, QLabel)
+from PySide6.QtCore import Slot
+from PySide6.QtGui import QKeySequence, QAction, QShortcut
+from PySide6.QtWidgets import (QMainWindow, QApplication, QTreeView, QComboBox, QLineEdit, QLabel)
 
 from genicam.genapi import EVisibility
 
 # Local application/library specific imports
 from harvesters_gui._private.frontend.helper import compose_tooltip
-from harvesters_gui._private.frontend.pyqt.action import Action
-from harvesters_gui._private.frontend.pyqt.feature_tree import \
+from harvesters_gui._private.frontend.pyside.action import Action
+from harvesters_gui._private.frontend.pyside.feature_tree import \
     FeatureEditDelegate, FilterProxyModel, FeatureTreeModel
-from harvesters_gui._private.frontend.pyqt.helper import get_system_font
+from harvesters_gui._private.frontend.pyside.helper import get_system_font
 
 """
 
@@ -41,7 +41,7 @@ If you got into a trouble relate to model, the following tool could give
 you a hint. ModelTest is a Python script and it tests your model and report
 the result:
 
-https://github.com/bgr/PyQt5_modeltest
+https://github.com/bgr/pyside5_modeltest
 
 """
 
@@ -216,7 +216,7 @@ class AttributeController(QMainWindow):
         self._proxy.setVisibility(visibility)
         self._view.expandAll()
 
-    @pyqtSlot('QString')
+    @Slot('QString')
     def _invalidate_feature_tree_by_keyword(self, keyword):
         self._proxy.setKeyword(keyword)
         self._view.expandAll()

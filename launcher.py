@@ -20,7 +20,7 @@
 
 import sys
 from PyQt5.QtWidgets import QApplication
-from harvesters_gui.frontend.pyqt5 import Harvester
+from harvesters_gui.frontend.pyside import Harvester
 
 
 if __name__ == "__main__":
